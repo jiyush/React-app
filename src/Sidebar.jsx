@@ -13,7 +13,7 @@ class Sidebar extends Component {
             </li>
             <li className="nav-item active">
             <NavLink className="nav-link" to="/admin/user" >
-                <i className="fa-user">
+                <i className="fas fa-fw fa-user">
                 </i>
                 <span>User Management</span>
             </NavLink>

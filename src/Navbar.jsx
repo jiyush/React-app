@@ -6,7 +6,7 @@ class Navbar extends Component {
         return(
             <nav className="navbar navbar-expand navbar-dark bg-dark static-top">
 
-            <NavLink className="navbar-brand mr-1" to="/admin">Start Bootstrap</NavLink>
+            <NavLink className="navbar-brand mr-1" to="/admin">React Demo</NavLink>
 
             <button className="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" >
                 <i className="fas fa-bars"></i>
