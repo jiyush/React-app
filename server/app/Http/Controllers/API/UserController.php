@@ -109,4 +109,11 @@ class UserController extends Controller
         $user = Auth::user(); 
         return response()->json(['success' => $user,'statusCode' => 1], $this->successStatus); 
     }
+
+    /**
+     * validate Token
+     */
+    public function validateToken(){
+        return response()->json(['success' => 'valid Token', 'statusCode' => 1],$this->successStatus);
+    }
 }

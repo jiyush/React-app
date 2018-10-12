@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import  Navbar  from "./Navbar";
 import  Sidebar  from "./Sidebar";
-import Auth from "./CheckAuth";
+import { isLogin } from "./CheckAuth";
 import {
     Route,
     Switch
 } from "react-router-dom"
 import Dashboard from "./Dashboard"
 import User from "./User"
-
+import AddUser from "./AddUser"
 class Panel extends Component {
     
     componentWillMount(){
-        if(!Auth.isLogin){
-            this.props.history.push('/');
+        let token = localStorage.getItem('token');
+        
+        if(!isLogin()){
+            // this.props.history.push('/');
         }
+        // console.log(isLogin())
+        
     }
 
     render(){
@@ -27,6 +31,7 @@ class Panel extends Component {
                    <Switch>
                         <Route  exact path="/admin" component={Dashboard} />
                         <Route path="/admin/user" component={User} />
+                        <Route path="/admin/user/add" component={AddUser} />
                     </Switch>
                       
                 </div>   

@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
-import {  NavLink } from 'react-router-dom';
+import {  NavLink, Redirect } from 'react-router-dom';
+
 
 class Navbar extends Component {
+    constructor(props){
+        super(props);
+    }
+    
     render(){
+        function logout(){
+            localStorage.removeItem('token');
+            // history.push('/');
+            // return <Redirect to='/login'  />
+        }
         return(
             <nav className="navbar navbar-expand navbar-dark bg-dark static-top">
 
@@ -46,7 +56,8 @@ class Navbar extends Component {
                 </a>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                     <div className="dropdown-divider"></div>
-                    <NavLink className="dropdown-item" to="/">Logout</NavLink>
+                    {/* <a className="dropdown-item" onClick={logout} href="/" >Logout</a> */}
+                    <NavLink className="dropdown-item" onClick={logout}  to="/">Logout</NavLink>
                 </div>
                 </li>
             </ul>

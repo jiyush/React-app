@@ -20,6 +20,8 @@ Route::post('login', 'API\UserController@login');
 Route::group(['middleware' => 'auth:api'], function(){
 	Route::post('details', 'API\UserController@details'); 
 
+	Route::post('validatetoken', 'API\UserController@validateToken');
+
 	//
 	Route::post('add', 'API\UserController@add');
 	Route::post('update', 'API\UserController@update');

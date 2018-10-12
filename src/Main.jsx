@@ -3,11 +3,11 @@ import {
     Route,
     Switch
 } from "react-router-dom"
-import Login from "./Login.jsx"
-import Panel from "./Panel.jsx"
-// import Home from "./Home"
-import Stuff from "./Stuff"
-import Contact from "./Contact"
+import Login from "./view/Login.jsx"
+import Panel from "./view/Panel.jsx"
+// import Home from "./view/Home"
+import Stuff from "./view/Stuff"
+import Contact from "./view/Contact"
 
  
 class Main extends Component {
