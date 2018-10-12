@@ -9,8 +9,10 @@ class User extends Component{
                 <div className="container-fluid">
                     <table className="table">
                         <thead>
-                            <th>test</th>
-                            <th>test</th>
+                            <tr>
+                                <th>test</th>
+                                <th>test</th>
+                            </tr>
                         </thead>
                         <tbody>
                            <tr>

@@ -29,6 +29,7 @@ class UserController extends Controller
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+            $success['user'] = $user;
             return response()->json(['success' => $success,
             						'statusCode' => 1
         						], $this-> successStatus); 
@@ -41,11 +42,11 @@ class UserController extends Controller
     }
 
     /** 
-     * Register api 
+     * add user api 
      * 
      * @return \Illuminate\Http\Response 
      */ 
-    public function register(Request $request) 
+    public function add(Request $request) 
     { 
         $validator = Validator::make($request->all(), [ 
             'name' => 'required', 
@@ -59,9 +60,43 @@ class UserController extends Controller
 		$input = $request->all(); 
         $input['password'] = bcrypt($input['password']); 
         $user = User::create($input); 
-        $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+        $success['token'] =  $user->createToken('MyApp')->accessToken; 
         $success['name'] =  $user->name;
-		return response()->json(['success'=>$success,'statusCode' => 1], $this-> successStatus); 
+		return response()->json(['success'=>$success,'statusCode' => 1], $this->successStatus); 
+    }
+
+    /**
+     * Update user api
+     */
+    public function update(Request $request){
+        $validator = Validator::make($request->all(),[
+            'name' => 'required', 
+            'email' => 'required|email',
+            'id' => 'required'
+        ]);
+        if($validator->fails()){
+            return response()->json(['error' => $validator->errors()],401);
+        }
+        $user = User::find($request->id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->update();
+        return response()->json(['success'=> 'updated','statusCode' => 1], $this->successStatus);
+
+    }
+
+    /**
+     * Delete user API
+     */
+    public function delete(){
+        $validator = Validator::make($request->all(),[
+            'id' => 'required'
+        ]);
+        if($validator->fails()){
+            return response()->json(['error' => $validator->errors()],401);
+        }
+        $user = User::find($request->id);
+        $user->delete();
     }
 
     /** 
@@ -72,6 +107,6 @@ class UserController extends Controller
     public function details() 
     { 
         $user = Auth::user(); 
-        return response()->json(['success' => $user,'statusCode' => 1], $this-> successStatus); 
+        return response()->json(['success' => $user,'statusCode' => 1], $this->successStatus); 
     }
 }

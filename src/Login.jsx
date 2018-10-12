@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom'
 import axios from 'axios';
+import { Redirect } from 'react-router-dom'
+
 
 class Login extends Component{
     constructor(props){
         super(props);
         this.state = {
-            email: '',
-            password: ''
+            email: 'piyush@gmail.com',
+            password: 'piyush123'
         }
     //  this.setUsername = this.setUsername.bind(this);
      this.handleChange = this.handleChange.bind(this);
@@ -20,24 +22,73 @@ class Login extends Component{
         this.setState({ [name]: event.target.value });
     }
     
+    // logout() {
+    //     // remove user from local storage to log user out
+    //     localStorage.removeItem('user');
+    // }
+    // handleResponse(response) {
+    //     return response.text().then(text => {
+    //         const data = text && JSON.parse(text);
+    //         if (!response.ok) {
+    //             if (response.status === 401) {
+    //                 // auto logout if 401 response returned from api
+    //                 logout();
+    //                 window.location.reload(true);
+    //             }
+    
+    //             const error = (data && data.message) || response.statusText;
+    //             return Promise.reject(error);
+    //         }
+    
+    //         return data;
+    //     });
+    // }
+
     handleSubmit(e) {
         e.preventDefault();
         const data = {
             email: this.state.email,
             password: this.state.password
         }
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Accept': 'application/json','Content-Type': 'application/json' , 'Access-Control-Allow-Origin': '*',},
-            body: JSON.stringify({ data })
-        };
+        var payload = JSON.stringify(data);
+        var config = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'http://localhost/react-demo/server/public'
+            }
+        }
+        // const requestOptions = {
+        //     method: 'POST',
+        //     headers: { 'Accept': 'application/json','Content-Type': 'application/json' , 'Access-Control-Allow-Origin': '*',},
+        //     body: JSON.stringify({ data })
+        // };
         
-        return fetch('http://localhost/react-demo/server/public/api/login',requestOptions).then(res => {
-            console.log(res);
-        });
-        // axios.post('http://localhost/react-demo/server/public/api/login',{ data }).then(res => {
+        // return fetch('http://localhost/react-demo/server/public/api/login',requestOptions).then(res => {
         //     console.log(res);
-        // })
+        // });
+        axios.post('http://localhost/react-demo/server/public/api/login', payload, config).then(res => {
+                // if(!res.ok){
+                //     if(res.status === 401){
+                //         localStorage.removeItem('user');
+                //         window.location.reload(true);
+                //     }
+                // }else{
+                //     console.log(res);
+                //     // this.props.history.push('/admin');
+                // }
+        //    console.log(res.statusText);
+           if(res.status === 200 && res.statusText === 'OK'){
+               localStorage.setItem('token',res.data.success.token);
+                console.log('Login...!');
+                this.props.history.push('/admin');
+                // return <Redirect to='/login'  />
+           }else{
+               console.log('incorect username or password');
+           }
+        //    return <Redirect to="/admin" user={res.data.success.user} />
+        //    this.props.history.push('/admin'); 
+        });
         
     }
     render() {
@@ -50,7 +101,7 @@ class Login extends Component{
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <div className="form-label-group">
-                                <input type="email" id="inputEmail" value={email}  onChange={this.handleChange('email')}   className="form-control" />
+                                <input type="email" id="inputEmail" value={email} placeholder="Email"  onChange={this.handleChange('email')}   className="form-control" />
                                 <label htmlFor="inputEmail">Email address</label>
                             </div>
                         </div>
