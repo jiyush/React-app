@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import  Navbar  from "./Navbar";
 import  Sidebar  from "./Sidebar";
-import { isLogin } from "./CheckAuth";
+import { isLogin } from "../auth/CheckAuth";
 import {
     Route,
-    Switch
+    Switch, NavLink
 } from "react-router-dom"
-import Dashboard from "./Dashboard"
-import User from "./User"
-import AddUser from "./AddUser"
+import Dashboard from "../dashboard/Dashboard"
+import User from "../user/User"
+import AddUser from "../user/AddUser"
 class Panel extends Component {
     
     componentWillMount(){
-        let token = localStorage.getItem('token');
+        // let token = localStorage.getItem('token');
         
         if(!isLogin()){
             // this.props.history.push('/');
@@ -30,8 +30,8 @@ class Panel extends Component {
                      
                    <Switch>
                         <Route  exact path="/admin" component={Dashboard} />
-                        <Route path="/admin/user" component={User} />
-                        <Route path="/admin/user/add" component={AddUser} />
+                        <Route exact path="/admin/user" component={User} />
+                        <Route exact path="/admin/user/add" component={AddUser} />
                     </Switch>
                       
                 </div>   

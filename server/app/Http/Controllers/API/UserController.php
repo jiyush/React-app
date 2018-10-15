@@ -32,13 +32,26 @@ class UserController extends Controller
             $success['user'] = $user;
             return response()->json(['success' => $success,
             						'statusCode' => 1
-        						], $this-> successStatus); 
+        						], $this->successStatus); 
         } 
         else{ 
             return response()->json(['error'=>'Unauthorised',
             						'statusCode' => 0
         						], 401); 
         } 
+    }
+
+    /*
+     * list user
+     */
+    public function list(Request $request)
+    {
+        $users = User::orderBy('id')->get();
+        if(!empty($users)){    
+            return response()->json(['success' => 'Listed','users' => $users,'statusCode' => 1],$this->successStatus);
+        }else{
+            return response()->json(['error' => 'something went\'s wrong', 'statusCode' => 0], $this->successStatus);
+        }
     }
 
     /** 

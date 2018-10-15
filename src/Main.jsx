@@ -3,8 +3,8 @@ import {
     Route,
     Switch
 } from "react-router-dom"
-import Login from "./view/Login.jsx"
-import Panel from "./view/Panel.jsx"
+import Login from "./view/auth/Login.jsx"
+import Panel from "./view/layout/Panel.jsx"
 // import Home from "./view/Home"
 import Stuff from "./view/Stuff"
 import Contact from "./view/Contact"
