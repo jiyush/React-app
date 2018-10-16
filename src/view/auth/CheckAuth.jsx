@@ -1,7 +1,9 @@
 import axios from 'axios';
-export function isLogin(){
-    let token = localStorage.getItem('token');
+import { API_URL } from '../Constant';
+import React from 'react';
     
+const isAuthenticated = () => {
+    let token = localStorage.getItem('token');
     if(token != null){
         const data = {
             token: token
@@ -15,19 +17,19 @@ export function isLogin(){
                 'Authorization': 'Bearer '+ token
             }
         }
-        axios.post('http://localhost/react-demo/server/public/api/validatetoken', payload, config).then(res => {       
+        axios.post(`${API_URL}/validatetoken`, payload, config).then(res => {       
                
         if(res.status === 200 && res.statusText === 'OK'){
-                
-                return true;    
+                isAuthenticated = true;   
            }else{
                localStorage.removeItem('token');
-               return false;
+               isAuthenticated =  false;
            }
         });
 
     }else{
-        return false;
+        isAuthenticated = false;
     }
 }
-export default isLogin
+    
+export default isAuthenticated

@@ -4,29 +4,22 @@ import axios from 'axios';
 import { API_URL } from '../Constant';
 
 
-class AddUser extends Component {
+class EditUser extends Component {
     constructor(props){
         super(props);
         this.state = {
             name: '',
-            email: '',
-            password: '',
-            c_password: ''
+            id: '',
+            email: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    handleChange = name => event => {
-        this.setState({ [name]: event.target.value });
-    }
-    handleSubmit(e) {
-        e.preventDefault();
+    componentWillMount(){
         let token = localStorage.getItem('token');
         const data = {
             name: this.state.name,
             email: this.state.email,
-            password: this.state.password,
-            c_password: this.state.c_password
         }
         var payload = JSON.stringify(data);
         var config = {
@@ -37,28 +30,62 @@ class AddUser extends Component {
                 'Authorization': 'Bearer '+ token
             }
         }
-        axios.post(`${API_URL}/user/add`, payload, config).then(res => {
+        axios.post(`${API_URL}/user/edit/${this.props.match.params.id
+        }`, payload, config).then(res => {
            if(res.status === 200 && res.statusText === 'OK'){
-            //    localStorage.setItem('token',res.data.success.token);
-            //     console.log('Login...!');
-            this.props.history.push('/admin/user');
-            console.log(res);
+            
+            this.setState({
+                id: res.data.editData.id,
+                name: res.data.editData.name,
+                email: res.data.editData.email
+            });
 
            }else{
-               console.log('error in add new user');
+               console.log('error in fetching data');
+           } 
+        });
+
+    }
+    handleChange = name => event => {
+        this.setState({ [name]: event.target.value });
+    }
+    handleSubmit(e) {
+        e.preventDefault();
+        let token = localStorage.getItem('token');
+        const data = {
+            id: this.state.id,
+            name: this.state.name,
+            email: this.state.email,
+        }
+        var payload = JSON.stringify(data);
+        var config = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'http://localhost/react-demo/server/public',
+                'Authorization': 'Bearer '+ token
+            }
+        }
+        axios.post(`${API_URL}/user/update`, payload, config).then(res => {
+           if(res.status === 200 && res.statusText === 'OK'){
+            this.props.history.push('/admin/user');
+            console.log(res,'Updated..!');
+
+           }else{
+               console.log('error in update user');
            } 
         });
         
     }
     render(){
-        const { name, email, password, c_password } = this.state
+        const { name, email } = this.state;
         return(
             <div id="content-wrapper">
-                <div className="container-fluid">
+                <div className="container-fluid col-md-8">
                     <div className="card">
                         <div className="card-header">
                         <h3>
-                          Add  User
+                          Edit User
                            
                         </h3>
                         </div>
@@ -76,20 +103,8 @@ class AddUser extends Component {
                                     <label htmlFor="inputEmail">Email address</label>
                                 </div>
                             </div>
-                            <div className="form-group">
-                                <div className="form-label-group">
-                                    <input type="password" id="inputPassword" value={password} onChange={this.handleChange('password')} className="form-control" placeholder="Password" />
-                                    <label htmlFor="inputPassword">Password</label>
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <div className="form-label-group">
-                                    <input type="password" id="com_password" value={c_password} onChange={this.handleChange('c_password')} className="form-control" placeholder="Confirm Password" />
-                                    <label htmlFor="com_password">Confirm Password</label>
-                                </div>
-                            </div>
                             {/* <NavLink className="btn btn-primary btn-block" to="/admin">Login</NavLink> */}
-                            <button className="btn btn-primary btn-block" >Add</button>
+                            <button className="btn btn-primary btn-block">Update</button>
                         </form>
                         </div>
                     </div>
@@ -99,4 +114,4 @@ class AddUser extends Component {
         );
     }
 }
-export default  AddUser
+export default  EditUser

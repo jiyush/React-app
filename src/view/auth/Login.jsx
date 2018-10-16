@@ -1,49 +1,24 @@
 import React, { Component } from 'react';
 // import { NavLink } from 'react-router-dom'
 import axios from 'axios';
-
+import { API_URL } from "../Constant";
 
 
 class Login extends Component{
     constructor(props){
         super(props);
         this.state = {
-            email: 'piyush@gmail.com',
+            email: 'piyush.mobio@gmail.com',
             password: 'piyush123'
         }
-    //  this.setUsername = this.setUsername.bind(this);
+    
      this.handleChange = this.handleChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);   
     }
-        // setUsername = (value) => {
-    //   this.setState({value})  
-    // }
+    
     handleChange = name => event => {
         this.setState({ [name]: event.target.value });
     }
-    
-    // logout() {
-    //     // remove user from local storage to log user out
-    //     localStorage.removeItem('user');
-    // }
-    // handleResponse(response) {
-    //     return response.text().then(text => {
-    //         const data = text && JSON.parse(text);
-    //         if (!response.ok) {
-    //             if (response.status === 401) {
-    //                 // auto logout if 401 response returned from api
-    //                 logout();
-    //                 window.location.reload(true);
-    //             }
-    
-    //             const error = (data && data.message) || response.statusText;
-    //             return Promise.reject(error);
-    //         }
-    
-    //         return data;
-    //     });
-    // }
-
     handleSubmit(e) {
         e.preventDefault();
         const data = {
@@ -67,7 +42,7 @@ class Login extends Component{
         // return fetch('http://localhost/react-demo/server/public/api/login',requestOptions).then(res => {
         //     console.log(res);
         // });
-        axios.post('http://localhost/react-demo/server/public/api/login', payload, config).then(res => {
+        axios.post(`${API_URL}/login`, payload, config).then(res => {
                 // if(!res.ok){
                 //     if(res.status === 401){
                 //         localStorage.removeItem('user');
@@ -95,7 +70,7 @@ class Login extends Component{
         const { email, password } = this.state;
         return(
             <div className="container">
-                <div className="card card-login mx-auto mt-5">
+                <div className="card card-login col-md-6 mx-auto mt-5">
                 <div className="card-header">Login</div>
                     <div className="card-body">
                     <form onSubmit={this.handleSubmit}>

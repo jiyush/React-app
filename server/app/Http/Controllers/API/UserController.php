@@ -44,7 +44,7 @@ class UserController extends Controller
     /*
      * list user
      */
-    public function list(Request $request)
+    public function list()
     {
         $users = User::orderBy('id')->get();
         if(!empty($users)){    
@@ -79,6 +79,19 @@ class UserController extends Controller
     }
 
     /**
+     * EDit data
+     */
+    public function editData(Request $request)
+    {
+        $user  = User::where('id',$request->id)->first();
+        if($user){
+            return response()->json(['editData'=>$user,'statusCode' => 1],$this->successStatus);
+        }else{
+            return response()->json(['error' => 'something went wrong','statusCode' => 0]);
+        }
+    }
+
+    /**
      * Update user api
      */
     public function update(Request $request){
@@ -101,7 +114,7 @@ class UserController extends Controller
     /**
      * Delete user API
      */
-    public function delete(){
+    public function delete(Request $request){
         $validator = Validator::make($request->all(),[
             'id' => 'required'
         ]);
@@ -110,6 +123,8 @@ class UserController extends Controller
         }
         $user = User::find($request->id);
         $user->delete();
+
+        return response()->json(['message'=> 'user deleted..!','users' => $this->list(),'statusCode' => 1],$this->successStatus);
     }
 
     /** 
@@ -123,6 +138,7 @@ class UserController extends Controller
         return response()->json(['success' => $user,'statusCode' => 1], $this->successStatus); 
     }
 
+    
     /**
      * validate Token
      */
