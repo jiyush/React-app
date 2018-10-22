@@ -81,7 +81,7 @@ class EditUser extends Component {
         const { name, email } = this.state;
         return(
             <div id="content-wrapper">
-                <div className="container-fluid col-md-8">
+                <div className="container-fluid">
                     <div className="card">
                         <div className="card-header">
                         <h3>

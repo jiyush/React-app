@@ -8,7 +8,7 @@ class User extends Component{
     constructor(props){
         super(props);
         this.state = {
-            users : null
+            users : []
         }
         // this.deleteUser = this.deleteUser.bind(this);
     }
@@ -26,12 +26,15 @@ class User extends Component{
                     'Authorization': 'Bearer '+ token
                 }
             }
-            axios.post(`${API_URL}/user/delete`,payload,config).then(res => {
+            axios.post(`${API_URL}/user/delete`,payload,config).then(res => { 
+
+                console.log('delete success');  
+
                 if(res.status === 200 && res.statusText === 'OK'){
-                    // this.props.history.push('/admin/user');
-                    this.forceUpdate();
-                    console.log(res.data.message);     
+                    const arrayCopy = this.state.users.filter((user) => user.id !== id);
+                    this.setState({users: arrayCopy});
                    }else{
+                       localStorage.removeItem('token');
                        return false;
                    }
             });
@@ -53,41 +56,15 @@ class User extends Component{
                 }
             }
             axios.post(`${API_URL}/user`, payload, config).then(res => {       
-                   
-            if(res.status === 200 && res.statusText === 'OK'){
-                console.log(res.data.users); 
                 this.setState({
-                    users: res.data.users.map((user) => 
-                    <tr key={user.id} >
-                        <td>{ user.name }</td>
-                        <td>{ user.email }</td>
-                        <td><NavLink to={"/admin/user/edit/"+user.id} className="btn btn-info" >Edit</NavLink>
-                        </td>
-                        <td>
-                            <button className="btn btn-danger" onClick={() => this.deleteUser(user.id)} >Delete</button>
-                        </td>
-                    </tr>
-                    )
-                });
-                //    this.state.users = res.data.users.map((user) => 
-                //        <tr key={user.id} >
-                //            <td  >{ user.name }</td>
-                //            <td >{ user.email }</td>
-                //        </tr>
-                //    );
-                   
-                    return true;    
-               }else{
-                   localStorage.removeItem('token');
-                   return false;
-               }
+                    users: res.data.users
+                })  
             });
-    
         }
     }
 
     render() {
-        const User = this.Userlist;
+        const userList = this.state.users;
         return(
             <div id="content-wrapper">
                 <div className="container-fluid col-md-12">
@@ -110,7 +87,19 @@ class User extends Component{
                                 </tr>
                             </thead>
                             <tbody>
-                            { this.state.users }
+                            {  
+                                userList.map((user) => 
+                                <tr key={user.id} >
+                                    <td>{ user.name }</td>
+                                    <td>{ user.email }</td>
+                                    <td><NavLink to={"/admin/user/edit/"+user.id} className="btn btn-info" >Edit</NavLink>
+                                    </td>
+                                    <td>
+                                        <button className="btn btn-danger" onClick={() => this.deleteUser(user.id)} >Delete</button>
+                                    </td>
+                                </tr>
+                                )
+                            }
                             </tbody>
                         </table>
                     </div>

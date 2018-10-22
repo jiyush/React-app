@@ -20,15 +20,15 @@ const isAuthenticated = () => {
         axios.post(`${API_URL}/validatetoken`, payload, config).then(res => {       
                
         if(res.status === 200 && res.statusText === 'OK'){
-                isAuthenticated = true;   
+                return true;   
            }else{
                localStorage.removeItem('token');
-               isAuthenticated =  false;
+               return   false;
            }
         });
 
     }else{
-        isAuthenticated = false;
+        return  false;
     }
 }
     

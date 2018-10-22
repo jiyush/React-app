@@ -54,7 +54,7 @@ class AddUser extends Component {
         const { name, email, password, c_password } = this.state
         return(
             <div id="content-wrapper">
-                <div className="container-fluid">
+                <div className="container-fluid col-md-12">
                     <div className="card">
                         <div className="card-header">
                         <h3>

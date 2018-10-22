@@ -1,7 +1,7 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import $ from 'jquery';
-import Popper from 'popper.js';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+import './asset/vendor/bootstrap/css/bootstrap.min.css';
+import './asset/vendor/fontawesome-free/css/all.min.css';
+import './asset/vendor/datatables/dataTables.bootstrap4.css';
+import './asset/vendor/sb-admin.min.css';
 import React from "react";
 import ReactDOM from "react-dom";
 import Main from "./Main.jsx";
