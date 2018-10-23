@@ -39,11 +39,7 @@ class AddUser extends Component {
         }
         axios.post(`${API_URL}/user/add`, payload, config).then(res => {
            if(res.status === 200 && res.statusText === 'OK'){
-            //    localStorage.setItem('token',res.data.success.token);
-            //     console.log('Login...!');
             this.props.history.push('/admin/user');
-            console.log(res);
-
            }else{
                console.log('error in add new user');
            } 

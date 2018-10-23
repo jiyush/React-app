@@ -1,22 +1,36 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "npm run development -- --watch",
-        "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
-    },
-    "devDependencies": {
-        "axios": "^0.18",
-        "bootstrap": "^4.0.0",
-        "cross-env": "^5.1",
-        "jquery": "^3.2",
-        "laravel-mix": "^2.0",
-        "lodash": "^4.17.5",
-        "popper.js": "^1.12",
-        "vue": "^2.5.7"
-    }
+  "name": "node-mongo",
+  "version": "1.0.0",
+  "description": "Api with mongodb database",
+  "main": "app.js",
+  "scripts": {
+    "start-dev": "nodemon start.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vikas kushwaha",
+  "license": "ISC",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "express-promise-router": "^3.0.3",
+    "joi": "^13.7.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.3.4",
+    "morgan": "^1.9.1",
+    "mysql2": "^1.6.1",
+    "node-datetime": "^2.1.2",
+    "nodemon": "^1.18.4",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "tedious": "^2.6.4"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0"
+  }
 }

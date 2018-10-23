@@ -69,8 +69,6 @@ class EditUser extends Component {
         axios.post(`${API_URL}/user/update`, payload, config).then(res => {
            if(res.status === 200 && res.statusText === 'OK'){
             this.props.history.push('/admin/user');
-            console.log(res,'Updated..!');
-
            }else{
                console.log('error in update user');
            } 

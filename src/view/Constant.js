@@ -1,1 +1,1 @@
-export const API_URL = 'http://localhost/react-demo/server/public/api'
+export const API_URL = 'http://localhost:5000';

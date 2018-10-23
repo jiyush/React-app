@@ -3,10 +3,6 @@ import {  NavLink } from 'react-router-dom';
 
 
 class Navbar extends Component {
-    constructor(props){
-        super(props);
-    }
-    
     render(){
         function logout(){
             localStorage.removeItem('token');

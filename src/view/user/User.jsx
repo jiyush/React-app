@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Route, NavLink, Switch } from 'react-router-dom'
-import AddUser from "./AddUser"
+import { NavLink } from 'react-router-dom'
 import axios from 'axios';
 import { API_URL } from '../Constant';
 
@@ -42,7 +41,6 @@ class User extends Component{
     }
     componentWillMount(){
         let token = localStorage.getItem('token');
-        if(token != null){
             const data = {
                 token: token
             }
@@ -51,16 +49,16 @@ class User extends Component{
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': 'http://localhost/react-demo/server/public',
-                    'Authorization': 'Bearer '+ token
+                    'Access-control-Allow-origin-Method': '*',
+                    'Access-Control-Allow-Origin': `${API_URL}/`  
                 }
             }
-            axios.post(`${API_URL}/user`, payload, config).then(res => {       
+            axios.get(`${API_URL}/user`, config).then(res => {       
                 this.setState({
-                    users: res.data.users
-                })  
+                    users: res.data
+                })
             });
-        }
+        
     }
 
     render() {
@@ -81,7 +79,6 @@ class User extends Component{
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
                                     <th>Email</th>
                                     <th colSpan="2" >Action</th>
                                 </tr>
@@ -89,8 +86,7 @@ class User extends Component{
                             <tbody>
                             {  
                                 userList.map((user) => 
-                                <tr key={user.id} >
-                                    <td>{ user.name }</td>
+                                <tr key={user._id} >
                                     <td>{ user.email }</td>
                                     <td><NavLink to={"/admin/user/edit/"+user.id} className="btn btn-info" >Edit</NavLink>
                                     </td>

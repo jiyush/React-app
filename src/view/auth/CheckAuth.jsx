@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { API_URL } from '../Constant';
-import React from 'react';
     
 const isAuthenticated = () => {
     let token = localStorage.getItem('token');
